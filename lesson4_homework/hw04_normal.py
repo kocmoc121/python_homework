@@ -15,7 +15,9 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysmNOGIP
        'UWgsKQrDOeZoNlZNRvHnLgCmysUeKnVJXPFIzvdDyleXylnKBfLCjLHntltignbQoiQzTYwZAiRwycdlHfyHNGmkNqSwXUrxGc'
 print('--------------------------1------------------')
 #вывожу только по 1 символу слева и справа от верхних регистров
+import re
 new_line = ''
+new_line2 = ''
 i =0
 while (i < len(line)):
        if line[i].isupper() and i!=0 and i!=len(line):
@@ -25,11 +27,20 @@ while (i < len(line)):
               new_line = new_line + line[i] + ' '
        i+=1
 
-print (new_line)
+print (new_line+'\n')
 
+l1 = ''
+l2 = ''
+m = len(line)
+pattern = re.compile(r'[a-z]'+'[A-Z]{1,'+ str(m) +'}'+'[a-z]')
+f_list = re.finditer(r'(?=([a-z]'+'[A-Z]{1,'+ str(m) +'}'+'[a-z]))',line)
+results = [item.group(1) for item in f_list]
 
+for p in results:
+       l1 = str(p)
+       l2 = l2+l1[0]+l1[-1]+" "
 
-
+print(l2)
 
 # Задание-2:
 # Вывести символы в верхнем регистре, которые окружают ровно два символа в нижнем регистре слева
@@ -55,6 +66,19 @@ for char in range(len(line_2)):
        elif str(line_2[char]).isupper() and str(line_2[char-1]).islower() and str(line_2[char+1]).isupper() and str(line_2[char-2]).islower() and str(line_2[char+2]).isupper():
               line_3 = line_3 + str(line_2[char])
 print(line_3)
+
+s1= ''
+s2 = ''
+pattern2 = re.compile('[a-z]{2}'+'[A-Z]{3}')
+p_list = re.findall(pattern2,line_2)
+
+for p in p_list:
+       s1 = str(p)
+       s2 = s2+s1[2]
+
+print(s2)
+
+
 
 # Задача-3:
 # Напишите скрипт заполняющий указанный файл (самомстоятельно задайте имя файла) произвольными целыми
