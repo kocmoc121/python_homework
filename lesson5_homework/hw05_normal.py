@@ -38,8 +38,9 @@ while True:
 		dir_name = input ('Полное название папки: ')
 		try:
 			
-			os.chdir(path)
+			os.chdir(dir_name)
 			print('Действие успешно')
+			print('Текущая папка' + str(os.getcwd())
 		except FileNotFoundError:
 			print('Указанной дирректории не существует')
 	else:
