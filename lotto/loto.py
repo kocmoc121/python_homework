@@ -86,7 +86,6 @@ class Ticket:
 						break
 			
 				self.ticket[r].append(x) 
-		#print(self.ticket)
 		for i in range(3):
 			self.ticket[i].sort()
 
@@ -99,19 +98,17 @@ class Ticket:
 				if  self.ticket[i][j] == self.number:
 					self.ticket[i][j] = '-'
 					x = 1
-#		if x == 1:
-#			for r in range(3): 
-#				for c in range(9): 
-#					if self.ticket[r][c] == self.number:
-#						self.ticket[r][c] = '-'
-
 		return x
 
 	def print_ticket(self):
 		
 		for i in range(len(self.ticket)):
 			for j in range(len(self.ticket[i])):
-				if self.ticket[i][j]<10:
+				if self.ticket[i][j] == '-' and j != (len(self.ticket[i])-1):
+					print(self.ticket[i][j] , end='...')
+				elif self.ticket[i][j] == '-' and j == (len(self.ticket[i])-1):
+					print(self.ticket[i][j] , end=' ')
+				elif self.ticket[i][j]<10:
 					print(self.ticket[i][j] , end='...')
 				elif j == (len(self.ticket[i])-1):
 					print(self.ticket[i][j] , end=' ')
@@ -120,59 +117,64 @@ class Ticket:
 
 			print()
 
+#функция печатает билеты (пока для игрок-комп)
+def print_players(a, b):
+	print('Игрок')
+	a.print_ticket()
+	print()
+	print('Компьютер')
+	b.print_ticket()
+	print()
 
-		
-def check_won (check):
-	pass
 
 numbers = []
-num = 0
-check_number = ''
+
+#создаем 2 билета - игрок и комп, в дальнейшем будет функция где выбирается - игрок-игрок, игрок-комп, комп-комп
 t = Ticket()
 t.ticket_create()
-#f = t.del_number(9)
-
 comp = Ticket()
 comp.ticket_create()
 
-print('Игрок')
-t.print_ticket()
-print()
-print('Компьютер')
-comp.print_ticket()
-print()
+print_players(t, comp)
 
 
 while True:
 	c = 2	
 	p = 2
 	d = 2
-	q = 2
+	tmp = 0
 	check_number = ''
+
+	#рандом для бочонка
 	num = random.randint(1,90)
-	for i in numbers:
+	for i in range(len(numbers)):
 		if num == numbers[i]:
-			continue
+			tmp = 1
+	if tmp == 1:
+		continue
+	numbers.append(num)
+	
 	#отображаем выбранный бочонок
-	lenth = 90-len(numbers)-1
+	lenth = 90-len(numbers)
 	print ('Бочонок номер ' + str(num) + ' (в игре осталось {} бочонов)'.format(lenth))
 	
+	#проверка игрока
 	check_number = input ('Зачеркнуть цифру? (y/n) ')
 	if check_number == 'y':
 		c = t.del_number(num)
-		print ('c = {}'.format(c))
 	elif check_number == 'n':
 		p = t.del_number(num)
-		print ('p = {}'.format(p))
 	if c == 0 or p == 1:
 		print ('Игрок проиграл')
 		break
-
+	
+	#проверка компа
 	d = comp.del_number(num)
-
 	if d == 0:
 		print ('Компьютер проиграл')
 		break	
+	
+	print_players(t, comp)
 
 
 
