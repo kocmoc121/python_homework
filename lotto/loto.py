@@ -87,7 +87,8 @@ class Ticket:
 			
 				self.ticket[r].append(x) 
 		#print(self.ticket)
-
+		for i in range(3):
+			self.ticket[i].sort()
 
 
 	def del_number(self, number):
@@ -95,13 +96,14 @@ class Ticket:
 		x = 0
 		for i in range(len(self.ticket)):
 			for j in range(len(self.ticket[i])):
-				if  self.ticket[i][j] == x:
+				if  self.ticket[i][j] == self.number:
+					self.ticket[i][j] = '-'
 					x = 1
-		if x == 1:
-			for r in range(3): 
-				for c in range(9): 
-					if self.ticket[r][c] == self.number:
-						self.ticket[r][c] = '-'
+#		if x == 1:
+#			for r in range(3): 
+#				for c in range(9): 
+#					if self.ticket[r][c] == self.number:
+#						self.ticket[r][c] = '-'
 
 		return x
 
@@ -109,7 +111,13 @@ class Ticket:
 		
 		for i in range(len(self.ticket)):
 			for j in range(len(self.ticket[i])):
-				print(self.ticket[i][j] , end='..')
+				if self.ticket[i][j]<10:
+					print(self.ticket[i][j] , end='...')
+				elif j == (len(self.ticket[i])-1):
+					print(self.ticket[i][j] , end=' ')
+				else:
+					print(self.ticket[i][j] , end='..')
+
 			print()
 
 
@@ -134,7 +142,12 @@ print('Компьютер')
 comp.print_ticket()
 print()
 
+
 while True:
+	c = 2	
+	p = 2
+	d = 2
+	q = 2
 	check_number = ''
 	num = random.randint(1,90)
 	for i in numbers:
@@ -143,8 +156,23 @@ while True:
 	#отображаем выбранный бочонок
 	lenth = 90-len(numbers)-1
 	print ('Бочонок номер ' + str(num) + ' (в игре осталось {} бочонов)'.format(lenth))
+	
 	check_number = input ('Зачеркнуть цифру? (y/n) ')
 	if check_number == 'y':
-		t.del_number(num)
+		c = t.del_number(num)
+		print ('c = {}'.format(c))
+	elif check_number == 'n':
+		p = t.del_number(num)
+		print ('p = {}'.format(p))
+	if c == 0 or p == 1:
+		print ('Игрок проиграл')
+		break
+
+	d = comp.del_number(num)
+
+	if d == 0:
+		print ('Компьютер проиграл')
+		break	
+
 
 
